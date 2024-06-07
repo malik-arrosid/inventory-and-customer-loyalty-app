@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import "../../public/css/custom.css";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +15,7 @@ export default function Navbar() {
         <div className="container mx-auto flex justify-between items-center">
           <Link
             to="/"
-            className="text-amber-500 text-lg font-semibold hover:font-bold"
+            className="text-amber-500 text-lg font-semibold underline-animation"
           >
             Toko Kelontong
           </Link>
@@ -51,19 +52,19 @@ export default function Navbar() {
           <div className="hidden lg:flex flex-row lg:items-center lg:space-x-4">
             <Link
               to="/inventaris"
-              className="text-amber-500 mx-2 my-2 lg:my-0 font-semibold hover:font-bold"
+              className="text-amber-500 mx-2 my-2 lg:my-0 font-semibold underline-animation"
             >
               Inventaris
             </Link>
             <Link
               to="/pelanggan"
-              className="text-amber-500 mx-2 my-2 lg:my-0 font-semibold hover:font-bold"
+              className="text-amber-500 mx-2 my-2 lg:my-0 font-semibold underline-animation"
             >
               Pelanggan
             </Link>
             <Link
               to="/laporanPenjualan"
-              className="text-amber-500 mx-2 my-2 lg:my-0 font-semibold hover:font-bold"
+              className="text-amber-500 mx-2 my-2 lg:my-0 font-semibold underline-animation"
             >
               Laporan Penjualan
             </Link>
