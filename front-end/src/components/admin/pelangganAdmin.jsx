@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function Pelanggan() {
+export default function PelangganAdmin() {
   const [pelanggans, setPelanggans] = useState([]);
   const [newPelanggan, setNewPelanggan] = useState({
     nama_pelanggan: "",
     frekuensi_beli: "",
     poin_loyalitas: "",
   });
-  const [updatePelanggan, setUpdatePelanggan] = useState(null);
+  const [editPelanggan, setEditPelanggan] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     axios
@@ -45,15 +45,15 @@ export default function Pelanggan() {
     try {
       const response = await axios.patch(
         `http://localhost:5000/api/pelanggan/${id_pelanggan}`,
-        updatePelanggan
+        editPelanggan
       );
       setPelanggans(
         pelanggans.map((pelanggan) =>
           pelanggan.id_pelanggan === id_pelanggan ? response.data : pelanggan
         )
       );
-      setUpdatePelanggan(null);
-      setShowUpdateModal(false);
+      setEditPelanggan(null);
+      setShowEditModal(false);
     } catch (error) {
       console.error("There was an error updating the customer!", error);
     }
@@ -114,18 +114,18 @@ export default function Pelanggan() {
                   <button
                     className="bg-blue-500 text-white px-2 py-1 rounded transition duration-300 ease-in-out hover:scale-110"
                     onClick={() => {
-                      setUpdatePelanggan(pelanggan);
-                      setShowUpdateModal(true);
+                      setEditPelanggan(pelanggan);
+                      setShowEditModal(true);
                     }}
                   >
-                    Update
+                    Edit
                   </button>
                   <span className="mx-2 text-white">space</span>
                   <button
                     className="bg-red-500 text-white px-2 py-1 rounded transition duration-300 ease-in-out hover:scale-110"
                     onClick={() => handleDelete(pelanggan.id_pelanggan)}
                   >
-                    Delete
+                    Hapus
                   </button>
                 </td>
               </tr>
@@ -179,31 +179,31 @@ export default function Pelanggan() {
                 className="bg-green-500 text-white px-4 py-2 rounded transition duration-300 ease-in-out hover:scale-110"
                 onClick={handleAdd}
               >
-                Add
+                Tambah
               </button>
               <button
                 className="bg-red-500 text-white px-4 py-2 rounded ml-2 transition duration-300 ease-in-out hover:scale-110"
                 onClick={() => setShowAddModal(false)}
               >
-                Cancel
+                Batal
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {showUpdateModal && (
+      {showEditModal && (
         <div className="fixed z-10 inset-0  backdrop-blur-sm">
           <div className="flex items-center justify-center min-h-screen">
             <div className="bg-white p-4 rounded shadow-lg w-2/4 border border-black">
-              <h2 className="text-lg mb-4 text-center">Update Pelanggan</h2>
+              <h2 className="text-lg mb-4 text-center">Edit Pelanggan</h2>
               <input
                 type="text"
                 placeholder="Nama Pelanggan"
-                value={updatePelanggan.nama_pelanggan}
+                value={editPelanggan.nama_pelanggan}
                 onChange={(e) =>
-                  setUpdatePelanggan({
-                    ...updatePelanggan,
+                  setEditPelanggan({
+                    ...editPelanggan,
                     nama_pelanggan: e.target.value,
                   })
                 }
@@ -212,10 +212,10 @@ export default function Pelanggan() {
               <input
                 type="number"
                 placeholder="Frekuensi Beli"
-                value={updatePelanggan.frekuensi_beli}
+                value={editPelanggan.frekuensi_beli}
                 onChange={(e) =>
-                  setUpdatePelanggan({
-                    ...updatePelanggan,
+                  setEditPelanggan({
+                    ...editPelanggan,
                     frekuensi_beli: e.target.value,
                   })
                 }
@@ -224,10 +224,10 @@ export default function Pelanggan() {
               <input
                 type="number"
                 placeholder="Poin Loyalitas"
-                value={updatePelanggan.poin_loyalitas}
+                value={editPelanggan.poin_loyalitas}
                 onChange={(e) =>
-                  setUpdatePelanggan({
-                    ...updatePelanggan,
+                  setEditPelanggan({
+                    ...editPelanggan,
                     poin_loyalitas: e.target.value,
                   })
                 }
@@ -235,15 +235,15 @@ export default function Pelanggan() {
               />
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded transition duration-300 ease-in-out hover:scale-110"
-                onClick={() => handleEdit(updatePelanggan.id_pelanggan)}
+                onClick={() => handleEdit(editPelanggan.id_pelanggan)}
               >
-                Update
+                Edit
               </button>
               <button
                 className="bg-red-500 text-white px-4 py-2 rounded ml-2 transition duration-300 ease-in-out hover:scale-110"
-                onClick={() => setShowUpdateModal(false)}
+                onClick={() => setShowEditModal(false)}
               >
-                Cancel
+                Batal
               </button>
             </div>
           </div>

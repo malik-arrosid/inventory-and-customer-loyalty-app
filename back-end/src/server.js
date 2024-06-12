@@ -13,12 +13,6 @@ const postPelanggan = require("./routes/pelanggan/post");
 const patchPelanggan = require("./routes/pelanggan/patch");
 const deletePelanggan = require("./routes/pelanggan/delete");
 
-// TODO: Import Service Routes Data Laporan
-const getLaporanPenjualan = require("./routes/laporanPenjualan/get");
-const postLaporanPenjualan = require("./routes/laporanPenjualan/post");
-const patchLaporanPenjualan = require("./routes/laporanPenjualan/patch");
-const deleteLaporanPenjualan = require("./routes/laporanPenjualan/delete");
-
 const server = express();
 
 server.use(cors());
@@ -35,12 +29,6 @@ server.use("/api/pelanggan", getPelanggan);
 server.use("/api/pelanggan", postPelanggan);
 server.use("/api/pelanggan", patchPelanggan);
 server.use("/api/pelanggan", deletePelanggan);
-
-// TODO: Routes Data Laporan Penjualan
-server.use("/api/laporanPenjualan", getLaporanPenjualan);
-server.use("/api/laporanPenjualan", postLaporanPenjualan);
-server.use("/api/laporanPenjualan", patchLaporanPenjualan);
-server.use("/api/laporanPenjualan", deleteLaporanPenjualan);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {

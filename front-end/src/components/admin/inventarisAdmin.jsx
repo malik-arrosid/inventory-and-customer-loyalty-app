@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function Inventaris() {
+export default function InventarisAdmin() {
   const [barangs, setBarangs] = useState([]);
   const [newBarang, setNewBarang] = useState({
     nama_barang: "",
@@ -10,9 +10,9 @@ export default function Inventaris() {
     kategori_barang: "",
     harga: "",
   });
-  const [updateBarang, setUpdateBarang] = useState(null);
+  const [editBarang, setEditBarang] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     axios
@@ -49,15 +49,15 @@ export default function Inventaris() {
     try {
       const response = await axios.patch(
         `http://localhost:5000/api/inventaris/${id_barang}`,
-        updateBarang
+        editBarang
       );
       setBarangs(
         barangs.map((barang) =>
           barang.id_barang === id_barang ? response.data : barang
         )
       );
-      setUpdateBarang(null);
-      setShowUpdateModal(false);
+      setEditBarang(null);
+      setShowEditModal(false);
     } catch (error) {
       console.error("There was an error updating the item!", error);
     }
@@ -97,7 +97,7 @@ export default function Inventaris() {
                 Kategori Barang
               </th>
               <th className="py-2 px-4 bg-green-500 border border-black">
-                Harga (IDR)
+                Harga Satuan
               </th>
               <th className="py-2 px-4 bg-green-500 border border-black">
                 Tindakan
@@ -124,18 +124,18 @@ export default function Inventaris() {
                   <button
                     className="bg-blue-500 text-white px-2 py-1 rounded transition duration-300 ease-in-out hover:scale-110"
                     onClick={() => {
-                      setUpdateBarang(barang);
-                      setShowUpdateModal(true);
+                      setEditBarang(barang);
+                      setShowEditModal(true);
                     }}
                   >
-                    Update
+                    Edit
                   </button>
                   <span className="mx-2 text-white">space</span>
                   <button
                     className="bg-red-500 text-white px-2 py-1 rounded transition duration-300 ease-in-out hover:scale-110"
                     onClick={() => handleDelete(barang.id_barang)}
                   >
-                    Delete
+                    Hapus
                   </button>
                 </td>
               </tr>
@@ -201,31 +201,31 @@ export default function Inventaris() {
                 className="bg-green-500 text-white px-4 py-2 rounded transition duration-300 ease-in-out hover:scale-110"
                 onClick={handleAdd}
               >
-                Add
+                Tambah
               </button>
               <button
                 className="bg-red-500 text-white px-4 py-2 rounded ml-2 transition duration-300 ease-in-out hover:scale-110"
                 onClick={() => setShowAddModal(false)}
               >
-                Cancel
+                Batal
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {showUpdateModal && (
+      {showEditModal && (
         <div className="fixed z-10 inset-0  backdrop-blur-sm">
           <div className="flex items-center justify-center min-h-screen">
             <div className="bg-white p-4 rounded shadow-lg w-2/4 border border-black">
-              <h2 className="text-lg mb-4 text-center">Update Barang</h2>
+              <h2 className="text-lg mb-4 text-center">Edit Barang</h2>
               <input
                 type="text"
                 placeholder="Nama Barang"
-                value={updateBarang.nama_barang}
+                value={editBarang.nama_barang}
                 onChange={(e) =>
-                  setUpdateBarang({
-                    ...updateBarang,
+                  setEditBarang({
+                    ...editBarang,
                     nama_barang: e.target.value,
                   })
                 }
@@ -234,19 +234,19 @@ export default function Inventaris() {
               <input
                 type="number"
                 placeholder="Stok"
-                value={updateBarang.stok}
+                value={editBarang.stok}
                 onChange={(e) =>
-                  setUpdateBarang({ ...updateBarang, stok: e.target.value })
+                  setEditBarang({ ...editBarang, stok: e.target.value })
                 }
                 className="border border-black px-4 py-2 mb-4 w-full"
               />
               <input
                 type="text"
                 placeholder="Kategori Stok"
-                value={updateBarang.kategori_stok}
+                value={editBarang.kategori_stok}
                 onChange={(e) =>
-                  setUpdateBarang({
-                    ...updateBarang,
+                  setEditBarang({
+                    ...editBarang,
                     kategori_stok: e.target.value,
                   })
                 }
@@ -255,10 +255,10 @@ export default function Inventaris() {
               <input
                 type="text"
                 placeholder="Kategori Barang"
-                value={updateBarang.kategori_barang}
+                value={editBarang.kategori_barang}
                 onChange={(e) =>
-                  setUpdateBarang({
-                    ...updateBarang,
+                  setEditBarang({
+                    ...editBarang,
                     kategori_barang: e.target.value,
                   })
                 }
@@ -267,23 +267,23 @@ export default function Inventaris() {
               <input
                 type="number"
                 placeholder="Harga"
-                value={updateBarang.harga}
+                value={editBarang.harga}
                 onChange={(e) =>
-                  setUpdateBarang({ ...updateBarang, harga: e.target.value })
+                  setEditBarang({ ...editBarang, harga: e.target.value })
                 }
                 className="border border-black px-4 py-2 mb-4 w-full"
               />
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded transition duration-300 ease-in-out hover:scale-110"
-                onClick={() => handleEdit(updateBarang.id_barang)}
+                onClick={() => handleEdit(editBarang.id_barang)}
               >
-                Update
+                Edit
               </button>
               <button
                 className="bg-red-500 text-white px-4 py-2 rounded ml-2 transition duration-300 ease-in-out hover:scale-110"
-                onClick={() => setShowUpdateModal(false)}
+                onClick={() => setShowEditModal(false)}
               >
-                Cancel
+                Batal
               </button>
             </div>
           </div>

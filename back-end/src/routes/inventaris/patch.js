@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const updateController = require("../../controllers/inventaris/updateController");
+const editController = require("../../controllers/inventaris/editController");
 
-router.patch("/:id_barang", updateController.updateBarang);
+router.patch("/:id_barang", editController.editBarang);
 
 module.exports = router;

@@ -1,23 +1,32 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import "../../public/css/custom.css";
+import { Link, useNavigate } from "react-router-dom";
+import "../../../public/css/custom.css";
 
-export default function Navbar() {
+export default function NavbarOwner({ user, setUser }) {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const logout = () => {
+    setUser(null);
+    navigate("/");
   };
 
   return (
     <>
       <nav className="bg-gray-800 p-4 fixed w-full top-0 z-20">
         <div className="container mx-auto flex justify-between items-center">
+          <span className="text-amber-500 mx-2 my-2 lg:my-0 font-semibold">
+            Halo, {user}
+          </span>
           <Link
-            to="/"
-            className="text-amber-500 text-lg font-semibold underline-animation"
+            to="/ownerHome"
+            className="text-amber-500 mx-2 my-2 lg:my-0 font-semibold underline-animation"
           >
-            Toko Kelontong
+            Beranda
           </Link>
           <div className="block lg:hidden">
             <button
@@ -51,23 +60,23 @@ export default function Navbar() {
           </div>
           <div className="hidden lg:flex flex-row lg:items-center lg:space-x-4">
             <Link
-              to="/inventaris"
+              to="/inventarisOwner"
               className="text-amber-500 mx-2 my-2 lg:my-0 font-semibold underline-animation"
             >
               Inventaris
             </Link>
             <Link
-              to="/pelanggan"
+              to="/pelangganOwner"
               className="text-amber-500 mx-2 my-2 lg:my-0 font-semibold underline-animation"
             >
               Pelanggan
             </Link>
-            <Link
-              to="/laporanPenjualan"
+            <button
+              onClick={logout}
               className="text-amber-500 mx-2 my-2 lg:my-0 font-semibold underline-animation"
             >
-              Laporan Penjualan
-            </Link>
+              Logout
+            </button>
           </div>
         </div>
       </nav>
@@ -75,26 +84,25 @@ export default function Navbar() {
         <div className="bg-gray-700 lg:hidden mt-5 fixed w-full top-10 z-20">
           <div className="container mx-auto my-0 flex flex-col items-center">
             <Link
-              to="/inventaris"
+              to="/inventarisOwner"
               className="text-amber-500 mx-2 my-2 font-semibold hover:font-bold"
               onClick={toggleMenu}
             >
               Inventaris
             </Link>
             <Link
-              to="/pelanggan"
+              to="/pelangganOwner"
               className="text-amber-500 mx-2 my-2 font-semibold hover:font-bold"
               onClick={toggleMenu}
             >
               Pelanggan
             </Link>
-            <Link
-              to="/laporanPenjualan"
+            <button
+              onClick={logout}
               className="text-amber-500 mx-2 my-2 font-semibold hover:font-bold"
-              onClick={toggleMenu}
             >
-              Laporan Penjualan
-            </Link>
+              Logout
+            </button>
           </div>
         </div>
       )}
