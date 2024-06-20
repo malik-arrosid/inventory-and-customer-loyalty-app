@@ -11,11 +11,11 @@ const addPelanggan = async (req, res) => {
       return res.status(400).json({ error: "Pelanggan sudah ada!" });
     }
     const result = await pool.query(
-      "INSERT INTO pelanggan (id_pelanggan, nama_pelanggan, frekuensi_beli, poin_loyalitas) SELECT COALESCE(MAX(id_pelanggan) + 1, 1), $1, $2, $3 FROM pelanggan RETURNING *",
+      "INSERT INTO pelanggan (id_pelanggan, nama_pelanggan, frekuensi_beli, jumlah_pembelian) SELECT COALESCE(MAX(id_pelanggan) + 1, 1), $1, $2, $3 FROM pelanggan RETURNING *",
       [
         newPelanggan.nama_pelanggan,
         newPelanggan.frekuensi_beli,
-        newPelanggan.poin_loyalitas,
+        newPelanggan.jumlah_pembelian,
       ]
     );
     res.status(201).json(result.rows[0]);

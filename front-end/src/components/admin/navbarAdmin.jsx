@@ -73,39 +73,41 @@ export default function Navbar({ user, setUser }) {
             </Link>
             <button
               onClick={logout}
-              className="text-amber-500 mx-2 my-2 lg:my-0 font-semibold underline-animation"
+              className="bg-red-500 text-white px-2 py-1 rounded transition duration-300 ease-in-out hover:scale-110 hover:bg-red-600 hover:text-black"
             >
               Logout
             </button>
           </div>
         </div>
       </nav>
-      {isOpen && (
-        <div className="bg-gray-700 lg:hidden mt-5 fixed w-full top-10 z-20">
-          <div className="container mx-auto my-0 flex flex-col items-center">
-            <Link
-              to=""
-              className="text-amber-500 mx-2 my-2 font-semibold hover:font-bold"
-              onClick={toggleMenu}
-            >
-              Inventaris
-            </Link>
-            <Link
-              to=""
-              className="text-amber-500 mx-2 my-2 font-semibold hover:font-bold"
-              onClick={toggleMenu}
-            >
-              Pelanggan
-            </Link>
-            <button
-              onClick={logout}
-              className="text-amber-500 mx-2 my-2 font-semibold hover:font-bold"
-            >
-              Logout
-            </button>
-          </div>
+      <div
+        className={`lg:hidden fixed w-full bg-gray-700 top-16 transition-transform duration-300 ease-in-out transform ${
+          isOpen ? "translate-y-0" : "-translate-y-full"
+        }`}
+      >
+        <div className="container mx-auto my-0 flex flex-col items-center">
+          <Link
+            to="/inventarisAdmin"
+            className="text-amber-500 mx-2 my-4 font-semibold hover:font-bold"
+            onClick={toggleMenu}
+          >
+            Inventaris
+          </Link>
+          <Link
+            to="/pelangganAdmin"
+            className="text-amber-500 mx-2 my-2 font-semibold hover:font-bold"
+            onClick={toggleMenu}
+          >
+            Pelanggan
+          </Link>
+          <button
+            onClick={logout}
+            className="bg-red-500 text-white px-2 py-1 mx-2 my-4 rounded transition duration-300 ease-in-out hover:scale-110 hover:bg-red-600 hover:text-black"
+          >
+            Logout
+          </button>
         </div>
-      )}
+      </div>
     </>
   );
 }

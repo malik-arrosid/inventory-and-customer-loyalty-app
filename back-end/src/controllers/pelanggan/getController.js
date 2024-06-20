@@ -30,4 +30,21 @@ const getPelangganById = async (req, res) => {
   }
 };
 
-module.exports = { getAllPelanggan, getPelangganById };
+const searchPelangganByName = async (req, res) => {
+  try {
+    const { nama_pelanggan } = req.query;
+    const result = await pool.query(
+      "SELECT * FROM pelanggan WHERE nama_pelanggan ILIKE $1",
+      [`%${nama_pelanggan}%`]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Pelanggan tidak ditemukan!" });
+    }
+    res.status(200).json(result.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+};
+
+module.exports = { getAllPelanggan, getPelangganById, searchPelangganByName };

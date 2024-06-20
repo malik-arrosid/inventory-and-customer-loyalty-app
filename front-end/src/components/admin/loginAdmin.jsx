@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function LoginAdmin({ setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -26,7 +27,7 @@ export default function LoginAdmin({ setUser }) {
       <div className="relative">
         <button
           onClick={backLogin}
-          className="absolute -top-48 -left-28 w-auto p-3 rounded text-xl bg-green-500 transition duration-300 ease-in-out hover:bg-green-600 hover:text-white"
+          className="absolute -top-56 left-28 w-auto p-3 rounded text-xl bg-green-500 transition duration-300 ease-in-out hover:bg-green-600 hover:text-white"
         >
           Kembali
         </button>
@@ -37,8 +38,11 @@ export default function LoginAdmin({ setUser }) {
       >
         <h2 className="text-2xl mb-4 text-center">Login</h2>
         <div className="mb-4">
-          <label className="block">Username</label>
+          <label htmlFor="username" className="block">
+            Username
+          </label>
           <input
+            id="username"
             type="text"
             value={username}
             placeholder="Username"
@@ -46,15 +50,25 @@ export default function LoginAdmin({ setUser }) {
             className="w-full px-3 py-2 border rounded"
           />
         </div>
-        <div className="mb-4">
-          <label className="block">Password</label>
-          <input
-            type="password"
-            value={password}
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-3 py-2 border rounded"
-          />
+        <div className="mb-4 relative">
+          <label htmlFor="password" className="block">Password</label>
+          <div className="flex items-center border rounded">
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-3 py-2"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="px-3 py-2"
+            >
+              {showPassword ? "😑" : "👁️"}
+            </button>
+          </div>
         </div>
         <button
           type="submit"
